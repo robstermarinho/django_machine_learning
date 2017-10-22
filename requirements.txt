@@ -3,3 +3,13 @@ Django==1.11.1
 gunicorn==19.6.0
 psycopg2==2.6.2
 whitenoise==3.2
+
+python-dateutil
+scipy
+matplotlib
+numpy
+jinja2
+pandas
+six
+scikit-learn
+scikit-image

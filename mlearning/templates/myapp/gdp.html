@@ -1,0 +1,109 @@
+{% extends 'templates/myapp/adminlte.html' %}
+{% block content %}
+{% load static %}
+<!-- Main content -->
+<section class="content">
+  <!-- Main row -->
+  <div class="row">
+    <!-- Left col -->
+    <section class="col-lg-12">
+
+      <!-- START CUSTOM TABS -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Plotted using Chart.js Lib</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="areaChart" style="height:300px"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+        <div class="col-md-6">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Plotted using Matplotlib Python</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <img class="img-responsive" src="{% static file1.path %}" />
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+
+        <div class="col-md-12">
+          <h2 class="page-header">Data Set</h2>
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-file-excel-o" aria-hidden="true"></i> GDP Per Capta</a></li>
+              <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-file-excel-o" aria-hidden="true"></i> oecd bli 2015 </a></li>
+              <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-spinner" aria-hidden="true"></i> Data Set Pre-Processed</a></li>
+
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+                <div class="table-responsive">
+                  {{gdp_pc | safe}}
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_2">
+                <div class="table-responsive">
+                  {{life_sat | safe}}
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_3">
+                <div class="table-responsive">
+                  {{data | safe}}
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+
+        <!-- END CUSTOM TABS -->
+
+      </section>
+      <!-- /.Left col -->
+      <!-- right col (We are only adding the ID to make the widgets sortable)-->
+      <section class="col-lg-6 connectedSortable">
+
+
+
+      </section>
+      <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+
+  </section>
+  {% endblock %}

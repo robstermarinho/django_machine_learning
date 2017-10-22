@@ -57,7 +57,7 @@ ROOT_URLCONF = 'mlearning.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PROJECT_ROOT)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

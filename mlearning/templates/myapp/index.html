@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Data Analisys</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link href="{% static "bootstrap3/css/bootstrap.min.css" %}" rel="stylesheet">
+	<!-- Bootstrap Slider CSS -->
+	<link href="{% static "assets/bootstrap-slider/css/bootstrap-slider.min.css" %}" rel="stylesheet">
+	<!-- Datatable CSS -->
+	<link href="{% static "assets/datatables/datatables.min.css" %}" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="{% static "font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800,800italic,300italic|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="container-fluid">
+	<div class="row">
+
+		<div class="col-lg-6">
+			<h2><b>Data Set</b></h2>
+			<hr>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">DataSet Pre-Processed from CSV files</h3>
+				</div>
+				<div class="panel-body">
+					<div style="min-height: 500px;" >
+						{{data | safe}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<h2><b>Simple Linear Model</b></h2>
+			<hr>
+		</div>
+		<div class="col-lg-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Dataset Graph</h3>
+				</div>
+				<div class="panel-body">
+					<img class="img-responsive" src="{% static "files/graph1.png" %}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-3">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h3 class="panel-title">Visualize the Model Fitting on the Training Data</h3>
+				</div>
+				<div class="panel-body">
+					<img class="img-responsive" src="{% static "files/graph2.png" %}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<form class="form">
+
+				<div class="row">
+					<div class="col-lg-12">
+						<h4>Predict Life Satisfaction </h4>
+					</div>
+					<div class="col-lg-12">
+						<div class="form-group">
+							<input id="gdp_slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="99999" data-slider-step="0.5" data-slider-value="14"/>
+						</div>
+
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>GDP Value</label>
+							<h4 class="text-warning"><b id="gdp_value"></b></h4>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>Life Satisfaction Prediction</label>
+							<h4 class="text-primary"><b id="ls_result"></b></h4>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+		<!-- js globals  -->
+		<script type="text/javascript">
+			base_URL_ = "{{ base_url }}";
+		</script>
+
+		<!-- jquery  -->
+		<script type="text/javascript" src="{% static "jquery/jquery.min.js" %}"></script>
+
+		<!-- bootstrap -->
+		<script type="text/javascript" src="{% static "bootstrap3/js/bootstrap.min.js" %}"></script>
+
+
+
+		<!-- datatables -->
+		<script type="text/javascript" src="{% static "assets/datatables/datatables.min.js" %}"></script>
+
+		<!-- bootstrap slider -->
+		<script type="text/javascript" src="{% static "assets/bootstrap-slider/bootstrap-slider.min.js" %}"></script>
+
+
+		<!-- custom -->
+		<script type="text/javascript" src="{% static "js/scripts.js" %}"></script>
+
+
+
+
+	</body>
+
+	</html>
