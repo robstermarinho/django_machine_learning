@@ -1,53 +1,36 @@
-# Heroku Django Starter Template
+# A Django App for Data Analysis/Machine Learning
+## Life Satisfaction x GDP of Country
 
-An utterly fantastic project starter template for Django 1.11.
+This is a sample application in Django for Data Analysis of a dataset which aims to
+predict a life satisfaction value based on GDP of the Country applying the simple linear model.
 
-## Features
+### Installation
 
-- Production-ready configuration for Static Files, Database Settings, Gunicorn, etc.
-- Enhancements to Django's static file serving functionality via WhiteNoise.
-- Latest Python 3.6 runtime environment. 
+1. Clone this repository:
 
-## How to Use
+```
+https://github.com/robstermarinho/django_machine_learning.git
+```
 
-To use this project, follow these steps:
+2. `cd` into project folder.
+```
+cd django_machine_learning
+```
 
-1. Create your working environment.
-2. Install Django (`$ pip install django`)
-3. Create a new project using this template
+3. The simplest way to start a server is running the following command:
 
-## Creating Your Project
+```
+python manage.py runserver 8000
+```
 
-Using this template to create a new Django app is easy::
+4. Verify the deployment by navigating to the following address in your preferred browser:
 
-    $ django-admin.py startproject --template=https://github.com/heroku/heroku-django-template/archive/master.zip --name=Procfile helloworld
+```
+127.0.0.1:8000/myapp/gdp/
+```
 
-(If this doesn't work on windows, replace `django-admin.py` with `django-admin`)
+## Requirements
 
-You can replace ``helloworld`` with your desired project name.
-
-## Deployment to Heroku
-
-    $ git init
-    $ git add -A
-    $ git commit -m "Initial commit"
-
-    $ heroku create
-    $ git push heroku master
-
-    $ heroku run python manage.py migrate
-
-See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
-
-## Using Python 2.7?
-
-Just update `runtime.txt` to `python-2.7.13` (no trailing spaces or newlines!).
-
-
-## License: MIT
-
-## Further Reading
-
-- [Gunicorn](https://warehouse.python.org/project/gunicorn/)
-- [WhiteNoise](https://warehouse.python.org/project/whitenoise/)
-- [dj-database-url](https://warehouse.python.org/project/dj-database-url/)
+  - [Python](https://www.python.org/) 3.6.2
+  - [Django](https://www.djangoproject.com/) 1.11.6
+  - [Anaconda](https://www.anaconda.com/download/) 4.3.27
