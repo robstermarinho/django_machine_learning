@@ -1,16 +1,43 @@
 $(document).ready(function() {
+	/* BOOTSTRAP SLIDER */
+	var a = $('.slider').slider();
+
 
 	$(".dataframe").addClass("table table-hover table-striped");
 	$(".dataframe").prop("border", 0);
-	$(".dataframe").DataTable();
 
-	$("#tab_1 table").DataTable();
+
+	$("#tab_1 table").DataTable({
+		"pageLength": 5,
+		"columnDefs": [
+		{
+			"targets": [ 5 ],
+			"visible": false,
+			"searchable": true
+		}]
+	});
+	$("#tab_2 table").DataTable({
+		"pageLength": 5,
+		"columnDefs": [
+		{
+			"targets": [ 4 ],
+			"visible": false,
+			"searchable": true
+		}]
+	});
+	$("#tab_3 table").DataTable({
+		"pageLength": 5
+	});
+
 	// With JQuery
 	$('#gdp_slider').slider({
 		formatter: function(value) {
 			return 'Current value: ' + value;
 		}
 	});
+
+
+
 
 
 	$("#gdp_slider").change(function(e){
@@ -39,12 +66,12 @@ $(document).ready(function() {
 
 
 	function HTMLEscape(str) {   //Javascript code, adjust as per your server-side lang
-	    return String(str)
-	        .replace(/&/g, '&amp;')
-	        .replace(/"/g, '&quot;')
-	        .replace(/'/g, '&#39;')
-	        .replace(/</g, '&lt;')
-	        .replace(/>/g, '&gt;');
+		return String(str)
+		.replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
 	}
 
 	/** GET data from graph 1 */
@@ -90,6 +117,31 @@ $(document).ready(function() {
 							var label = data.labels[tooltipItem.index];
 							return label + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
 						}
+					}
+				},
+
+				legend: {
+					boxWidth: 100,
+					onHover: function(e) {
+						e.target.style.cursor = 'pointer';
+					},
+					labels: {
+						fontColor: 'rgb(255, 99, 132)'
+					}
+				},
+				hover: {
+					onHover: function(e) {
+						var point = this.getElementAtEvent(e);
+						if (point.length) e.target.style.cursor = 'pointer';
+						else e.target.style.cursor = 'default';
+					}
+				},
+				layout: {
+					padding: {
+						left: 10,
+						right: 0,
+						top: 0,
+						bottom: 0
 					}
 				}
 			}

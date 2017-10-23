@@ -38,6 +38,7 @@ def gdp(request):
 	    .render()
 	)
 
+	#Pre - Process DATA
 	life_sat_condition = (life_sat["INDICATOR"] == "SW_LIFS") & (life_sat["INEQUALITY"] == "TOT")
 	columns_of_interest = ["Country", "INDICATOR", "Value"]
 	life_sat_by_country = life_sat[life_sat_condition][columns_of_interest]
@@ -52,6 +53,7 @@ def gdp(request):
 	# Sorting by Country
 	life_sat_gdp = life_sat_gdp.sort_values(by=('Country'), ascending=True)
 
+	# Plotting the dataset using Matplotlib
 	ploted = life_sat_gdp.plot(kind = "scatter",
 		x = "GDP_2015", y = "Life_Satisfaction",
 		title = "Life Satisfaction x GDP", color="#62adea")
@@ -65,6 +67,7 @@ def gdp(request):
 	path = settings.PROJECT_ROOT + "/static/" + file1['path']
 	fig.savefig(path)
 
+	#Taining the model
 	X = np.c_[life_sat_gdp["GDP_2015"]]
 	y = np.c_[life_sat_gdp["Life_Satisfaction"]]
 
@@ -77,6 +80,7 @@ def gdp(request):
 	lr_model.fit(X_train, y_train)
 	y_train_pred = lr_model.predict(X_train)
 
+	# Plotting the result of the modeling
 	plt.scatter(X_train, y_train, color = "orange", alpha = 0.5, edgecolors = 'red')
 	ploted2 = plt.plot(X_train, y_train_pred, color = "#8e350b", linewidth = 3, alpha = 0.7)
 	plt.title("Fitting a linear model to the training set")
@@ -84,16 +88,23 @@ def gdp(request):
 	plt.ylabel("Life Satisfaction Index")
 
 	fig2 = ploted.get_figure()
-	path2 = settings.PROJECT_ROOT + "/static/files/graph2.png"
-	fig.savefig(path2)
+	file2 = ({
+		'path' : "files/graph2.png",
+		'title': "Fitting a linear model to the training set",
+	})
+	path = settings.PROJECT_ROOT + "/static/" + file2['path']
+	fig2.savefig(path)
+
+
 	base_url = request.get_host()
 	return render_to_response('templates/myapp/gdp.html', {
 		'data': life_sat_gdp.to_html(),
 		'gdp_pc': html_table_gdp,
 		'life_sat': life_sat.to_html(),
 		'file1' : file1,
+		'file2' : file2,
 		'base_url': base_url
-		})
+	})
 
 
 
