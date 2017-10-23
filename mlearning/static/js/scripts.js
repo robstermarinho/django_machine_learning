@@ -1,12 +1,8 @@
 $(document).ready(function() {
-	/* BOOTSTRAP SLIDER */
-	var a = $('.slider').slider();
 
-
+	/* DATATABLES */
 	$(".dataframe").addClass("table table-hover table-striped");
 	$(".dataframe").prop("border", 0);
-
-
 	$("#tab_1 table").DataTable({
 		"pageLength": 5,
 		"columnDefs": [
@@ -29,25 +25,23 @@ $(document).ready(function() {
 		"pageLength": 5
 	});
 
-	// With JQuery
-	$('#gdp_slider').slider({
-		formatter: function(value) {
-			return 'Current value: ' + value;
-		}
+
+
+	/* BOOTSTRAP SLIDER */
+	$('.slider').slider()
+	predict_gdp_value(1000);
+	$("#gdp_slider").change(function(e){
+		e.preventDefault();
+		var value_x = $(this).val();
+		$("#gdp_value").html(value_x);
+		predict_gdp_value(value_x);
 	});
 
-
-
-
-
-	$("#gdp_slider").change(function(e){
-
-		e.preventDefault();
-		$("#gdp_value").html($("#gdp_slider").val());
+	function predict_gdp_value(new_x){
 		$.ajax({
 			url: base_URL_ + "/myapp/getPredictedY/",
 			method: "GET",
-			data: { new_x : $("#gdp_slider").val() },
+			data: { new_x : new_x },
 			dataType: "json",
 			beforeSend: function() {
 				$("#predict_life_satisfaction").prop("disabled", true);
@@ -62,8 +56,7 @@ $(document).ready(function() {
 				alert('error');
 			},
 		});
-	});
-
+	}
 
 	function HTMLEscape(str) {   //Javascript code, adjust as per your server-side lang
 		return String(str)
