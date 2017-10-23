@@ -28,20 +28,19 @@ $(document).ready(function() {
 
 
 	/* BOOTSTRAP SLIDER */
-	$('.slider').slider()
-	predict_gdp_value(1000);
-	$("#gdp_slider").change(function(e){
-		e.preventDefault();
-		var value_x = $(this).val();
-		$("#gdp_value").html(value_x);
-		predict_gdp_value(value_x);
-	});
+	$('#gdp_slider').slider().on('slideStop', predict_gdp_value);
+	getPredictedY(20000);
 
-	function predict_gdp_value(new_x){
+	function predict_gdp_value(e){
+		$("#gdp_value").html($(this).val());
+		getPredictedY($(this).val());
+
+	}
+	function getPredictedY(valuex){
 		$.ajax({
 			url: base_URL_ + "/myapp/getPredictedY/",
 			method: "GET",
-			data: { new_x : new_x },
+			data: { new_x : valuex },
 			dataType: "json",
 			beforeSend: function() {
 				$("#predict_life_satisfaction").prop("disabled", true);
