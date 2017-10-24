@@ -97,6 +97,8 @@ def gdp(request):
 
 
 	base_url = request.get_host()
+	if(base_url == "127.0.0.1:8000"):
+		base_url = "http://127.0.0.1:8000"
 	return render_to_response('templates/myapp/gdp.html', {
 		'data': life_sat_gdp.to_html(),
 		'gdp_pc': html_table_gdp,

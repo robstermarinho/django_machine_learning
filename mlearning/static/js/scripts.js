@@ -52,7 +52,11 @@ $(document).ready(function() {
 			complete: function(){
 			},
 			success: function(data){
-				$("#ls_result").html(data);
+				if(data == 0){
+					getPredictedY(valuex);
+				}else{
+					$("#ls_result").html(data);
+				}
 			},
 			error: function(xhr, status, error) {
 				alert("Internal Error");
