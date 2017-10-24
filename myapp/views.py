@@ -14,6 +14,7 @@ import pandas as pd                 						# Library for data analysis tools and 
 from sklearn import linear_model                           	# Tools for data mining and data analysis
 from sklearn.model_selection import train_test_split       	# Split arrays or matrices into random train and test subsets
 from sklearn.metrics import mean_squared_error, r2_score   	# Mean squared error regression loss; R^2 score - Coefficient of determination
+from sklearn.preprocessing import PolynomialFeatures
 from django.shortcuts import render_to_response
 from django.http import JsonResponse
 from django.conf import settings
@@ -80,7 +81,12 @@ def gdp(request):
 	lr_model.fit(X_train, y_train)
 	y_train_pred = lr_model.predict(X_train)
 
+	# Getting metrics
+	mse_train = mean_squared_error(y_train, y_train_pred)
+	r2_train = r2_score(y_train, y_train_pred)
+
 	# Plotting the result of the modeling
+
 	plt.scatter(X_train, y_train, color = "orange", alpha = 0.5, edgecolors = 'red')
 	ploted2 = plt.plot(X_train, y_train_pred, color = "#8e350b", linewidth = 3, alpha = 0.7)
 	plt.title("Fitting a linear model to the training set")
@@ -95,6 +101,7 @@ def gdp(request):
 	path = settings.PROJECT_ROOT + "/static/" + file2['path']
 	fig2.savefig(path)
 
+	polynomial = reshape_and_split(ploted, life_sat_gdp, X_train, X_test, y_train, y_test)
 
 	base_url = request.get_host()
 	if(base_url == "127.0.0.1:8000"):
@@ -105,9 +112,54 @@ def gdp(request):
 		'life_sat': life_sat.to_html(),
 		'file1' : file1,
 		'file2' : file2,
+		'mse_train': mse_train,
+		'r2_train': r2_train,
+		'polynomial': polynomial,
 		'base_url': base_url
 	})
 
+
+# Train a Linear Model with Polynomial Features
+def reshape_and_split(ploted, life_sat_gdp, X_train, X_test, y_train, y_test):
+
+	res = {
+		'lrf_model' : [],
+		'mse': 0,
+		'r2': 0,
+		'fig': ''
+	}
+	# of second order, quadratic
+	polyf = PolynomialFeatures(2)
+	X_train_f = polyf.fit_transform(X_train)
+
+	# New Model
+	lrf_model = linear_model.LinearRegression()
+	lrf_model.fit(X_train_f, y_train)
+	res['lrf_model'] = lrf_model
+
+	# Test the Model on the Training Set
+	y_train_f_pred = lrf_model.predict(X_train_f)
+	mse_f_train = mean_squared_error(y_train, y_train_f_pred)
+	res['mse'] = mse_f_train
+	r2_f_train = r2_score(y_train, y_train_f_pred)
+	res['r2'] = r2_f_train
+
+	plt.scatter(X_train, y_train, color = "green")
+	plt.scatter(X_train_f[:,1], y_train_f_pred, color = "blue")
+	plt.title("Fitting a Linear Model with Polynomial Features to the Training Set")
+	plt.xlabel("GDP 2015")
+	plt.ylabel("Life Satisfaction Index")
+
+	fig = ploted.get_figure()
+	file = ({
+		'path' : "files/graph3.png",
+		'title': "Fitting a Linear Model with Polynomial Features to the Training Set",
+	})
+	path = settings.PROJECT_ROOT + "/static/" + file['path']
+	fig.savefig(path)
+	res['fig'] = file
+
+	return res
 
 
 def dataframe_to_json_chart_plot(request):
