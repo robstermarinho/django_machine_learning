@@ -29,7 +29,10 @@ $(document).ready(function() {
 
 	/* BOOTSTRAP SLIDER */
 	$('#gdp_slider').slider().on('slideStop', predict_gdp_value);
+
 	getPredictedY(20000);
+	load_graphs();
+
 
 	function predict_gdp_value(e){
 		$("#gdp_value").html($(this).val());
@@ -37,10 +40,12 @@ $(document).ready(function() {
 
 	}
 	function getPredictedY(valuex){
+
 		$.ajax({
 			url: base_URL_ + "/myapp/getPredictedY/",
 			method: "GET",
-			data: { new_x : valuex },
+			async: true,
+			data: { new_x : parseFloat(valuex)},
 			dataType: "json",
 			beforeSend: function() {
 			},
@@ -50,7 +55,10 @@ $(document).ready(function() {
 				$("#ls_result").html(data);
 			},
 			error: function(xhr, status, error) {
-				alert("Error: " +  xhr.responseText);
+				alert("Internal Error");
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
 			}
 		});
 	}
@@ -66,19 +74,21 @@ $(document).ready(function() {
 
 	/** GET data from graph 1 */
 	data_graph1 = {};
-	$.ajax({
-		url: base_URL_ + "/myapp/chartplot/",
-		async: true,
-		dataType: "json",
-		success: function(data){
-			var data_graph1 = JSON.parse(data)
-			build_the_chart(data_graph1);
-		},
-		error: function(xhr, status, error) {
-			var err = eval("(" + xhr.responseText + ")");
-			alert(err.Message);
-		}
-	});
+	function load_graphs(){
+		$.ajax({
+			url: base_URL_ + "/myapp/chartplot/",
+			async: true,
+			dataType: "json",
+			success: function(data){
+				data_graph1 = JSON.parse(data)
+				build_the_chart(data_graph1);
+			},
+			error: function(xhr, status, error) {
+				alert("Internal Error");
+			}
+		});
+	}
+
 
 	function build_the_chart(data_graph1){
 		var ctx = $("#areaChart");
