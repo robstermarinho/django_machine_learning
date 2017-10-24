@@ -114,7 +114,9 @@ def gdp(request):
 		'file2' : file2,
 		'mse_train': mse_train,
 		'r2_train': r2_train,
-		'polynomial': polynomial,
+		'file3' : polynomial['fig'],
+		'mse2' : polynomial['mse'],
+		'r22' : polynomial['r2'],
 		'base_url': base_url
 	})
 
