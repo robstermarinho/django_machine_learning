@@ -43,17 +43,15 @@ $(document).ready(function() {
 			data: { new_x : valuex },
 			dataType: "json",
 			beforeSend: function() {
-				$("#predict_life_satisfaction").prop("disabled", true);
 			},
 			complete: function(){
-				$("#predict_life_satisfaction").prop("disabled", false);
 			},
 			success: function(data){
 				$("#ls_result").html(data);
 			},
-			error: function(data){
-				alert('error');
-			},
+			error: function(xhr, status, error) {
+				alert("Error: " +  xhr.responseText);
+			}
 		});
 	}
 

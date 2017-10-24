@@ -136,7 +136,9 @@ def getPredictedY(request):
 
 	new_x = float(request.GET['new_x'])
 	X_new = [[new_x]]
-	predicted = lr_model.predict(X_new)
+	predicted = 0
+	if(not isinstance(lr_model, list)):
+		predicted = lr_model.predict(X_new)
 	return render_to_response('templates/myapp/test.html', {'predicted': predicted, 'new_x' : new_x})
 
 
