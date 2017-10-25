@@ -5,14 +5,16 @@
 <section class="content">
 
   <div class="row">
-    <section class="col-lg-12">
+
+
+    <div class="col-lg-12">
+      <h2 class="page-header">Diabetes dataset</h2>
+    </div>
+    <section class="col-lg-7">
 
       <div class="row">
 
 
-        <div class="col-lg-12">
-          <h2 class="page-header">Diabetes dataset</h2>
-        </div>
 
         <div class="col-lg-12">
           <div class="nav-tabs-custom">
@@ -34,8 +36,83 @@
 
       </div>
     </section>
+    <section class="col-lg-5">
+      <div class="row">
 
-</div>
+        <div class="col-lg-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"><i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp; Linear Model Graph</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <img style="height: 340px;" class="img-responsive" src="{% static file %}" />
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+
+    <section class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-6">
+
+
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"><i class="fa fa-line-chart" aria-hidden="true"></i> &nbsp; Linear Regression</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-th-large"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">CROSS VALIDATION SCORE</span>
+                  <span class="info-box-number">{{cv_score_train_mean_LINEAR}}</span>
+                </div>
+              </div>
+
+
+              <table class="table table-striped">
+                <tr>
+                  <th></th>
+                  <th>Validation</th>
+                  <th>Test</th>
+                </tr>
+                <tr>
+                  <th style="color:#00c468;">MSE Score</th>
+                  <td>{{validation_mse_LINEAR}}</td>
+                  <td>{{test_mse_LINEAR}}</td>
+                </tr>
+                <tr>
+                  <th style="color:#00d2f7;">R2 Score</th>
+                  <td>{{validation_r2_score_LINEAR}}</td>
+                  <td>{{test_r2_score_LINEAR}}</td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
 
 </section>
 {% endblock %}

@@ -3,7 +3,7 @@ $(document).ready(function() {
 	/* DATATABLES */
 	$("#diabese_tab_1 table").addClass("table table-hover table-striped");
 	$("#diabese_tab_1 table").css("width", "100%");
-	$("#diabese_tab_1 table").DataTable({});
+	$("#diabese_tab_1 table").DataTable({"pageLength": 5,});
 
 
 

@@ -50,13 +50,32 @@ def index(request):
 	lm = linear_model.LinearRegression()
 	lm.fit(X_train, y_train)
 
-	# Make cross-validated prediction
+	# Cross-validate the model
+	cv_score = cross_val_score(lm, X_train, y_train, cv=5 )
+	cv_score_train_mean_LINEAR = np.mean(cv_score)
+
+	# Make cross-validated predictions
 	y_train_pred_cv = cross_val_predict(lm, X_train, y_train, cv=5)
+	validation_mse_LINEAR = mean_squared_error(y_train, y_train_pred_cv)
 
+	# Explained variance score: 1 is perfect prediction
+	validation_r2_score_LINEAR = r2_score(y_train, y_train_pred_cv)
 
-	# make predictions using the testing set
+	# Plotting
+	ploted = plt.scatter(y_train, y_train_pred_cv, color = "green")
+	fig = ploted.get_figure()
+	file = "files/diabeses_graph1.png"
+	path = settings.PROJECT_ROOT + "/static/" + file
+	fig.savefig(path)
+
+	#  Make predictions using the testing set
 	y_test_pred = lm.predict(X_test)
+	# The mean squared error
+	test_mse_LINEAR = mean_squared_error(y_test, y_test_pred)
+	# Explained variance score: 1 is perfect prediction
+	test_r2_score_LINEAR = r2_score(y_test,y_test_pred)
 
+	######################## VIEW ####################
 	# JS script for this page
 	additional_script = '<script type="text/javascript" src="' + settings.STATIC_URL + 'js/scripts_diabeses.js"></script>'
 	# Render View
@@ -66,8 +85,15 @@ def index(request):
 	return render_to_response('templates/myapp/diabeses.html', {
 		'html_diabeses': html_diabeses,
 		'base_url': base_url,
+		'cv_score_train_mean_LINEAR': cv_score_train_mean_LINEAR,
+		'validation_mse_LINEAR': validation_mse_LINEAR,
+		'validation_r2_score_LINEAR' : validation_r2_score_LINEAR,
+		'test_mse_LINEAR': test_mse_LINEAR,
+		'test_r2_score_LINEAR': test_r2_score_LINEAR,
+		'file': file,
 		'additional_script': additional_script
 	})
+
 
 
 # Get Predicted Diabeses
