@@ -6,10 +6,6 @@ $(document).ready(function() {
 	$("#diabese_tab_1 table").DataTable({});
 
 
-	/* BOOTSTRAP SLIDER */
-	$('#gdp_slider').slider().on('slideStop', predict_gdp_value);
-
-
 
 	function predict_gdp_value(e){
 		$("#gdp_value").html($(this).val());

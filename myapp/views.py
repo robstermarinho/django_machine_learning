@@ -4,6 +4,7 @@ from django.shortcuts import render
 import io
 import os
 import json
+import socket
 
 import matplotlib
 matplotlib.use('Agg')
@@ -109,6 +110,8 @@ def gdp(request):
 	base_url = request.get_host()
 	if(base_url == "127.0.0.1:8000"):
 		base_url = "http://127.0.0.1:8000"
+	else:
+		base_url = "https://" + base_url
 
 	# JS script for this page
 	additional_script = '<script type="text/javascript" src="' + settings.STATIC_URL + 'js/scripts.js"></script>'
