@@ -14,6 +14,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_val_predict
+from sklearn.ensemble import RandomForestClassifier
 
 #Django
 from django.shortcuts import render_to_response
@@ -43,8 +44,10 @@ def index(request):
 	X_train, X_test, y_train, y_test = train_test_split(
 		diabetes_X,
 		diabetes_y,
-		test_size=0.25,
+		test_size=0.4,
 		random_state=1)
+
+	random_forest = apply_randomForest(X_train, X_test, y_train, y_test)
 
 	# Create linear regression object
 	lm = linear_model.LinearRegression()
@@ -90,9 +93,37 @@ def index(request):
 		'validation_r2_score_LINEAR' : validation_r2_score_LINEAR,
 		'test_mse_LINEAR': test_mse_LINEAR,
 		'test_r2_score_LINEAR': test_r2_score_LINEAR,
+		'random_forest': random_forest,
 		'file': file,
 		'additional_script': additional_script
 	})
+
+def apply_randomForest(X_train, X_test, y_train, y_test):
+
+	rf_model = RandomForestClassifier()
+	rf_model.fit(X_train, y_train)
+	#cv_scores_rf_mean
+	cv_scores_rf = cross_val_score(rf_model, X_train, y_train, cv=5, scoring="accuracy")
+	cv_scores_rf_mean =  np.mean(cv_scores_rf)
+
+	# Make cross-validated predictions
+	y_train_pred_cv = cross_val_predict(rf_model, X_train, y_train, cv=5)
+	validation_mse = mean_squared_error(y_train, y_train_pred_cv)
+	validation_r2_score = r2_score(y_train, y_train_pred_cv)
+
+	y_test_pred = rf_model.predict(X_test)
+	test_mse = mean_squared_error(y_test, y_test_pred)
+	test_r2_score = r2_score(y_test,y_test_pred)
+
+
+	result = {
+		'cv_scores_rf_mean' : cv_scores_rf_mean,
+		'validation_mse' : validation_mse,
+		'validation_r2_score': validation_r2_score,
+		'test_mse': test_mse,
+		'test_r2_score': test_r2_score
+	}
+	return result
 
 
 
