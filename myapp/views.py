@@ -59,6 +59,7 @@ def gdp(request):
 
 
 	# Plotting the dataset using Matplotlib
+	plt.gcf().clear()
 	ploted = life_sat_gdp.plot(kind = "scatter",
 		x = "GDP_2015", y = "Life_Satisfaction",
 		title = "Life Satisfaction x GDP", color="#62adea")

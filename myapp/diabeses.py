@@ -65,6 +65,7 @@ def index(request):
 	validation_r2_score_LINEAR = r2_score(y_train, y_train_pred_cv)
 
 	# Plotting
+	plt.gcf().clear()
 	ploted = plt.scatter(y_train, y_train_pred_cv, color = "green")
 	fig = ploted.get_figure()
 	file = "files/diabeses_graph1.png"
