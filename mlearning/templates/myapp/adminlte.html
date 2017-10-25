@@ -175,6 +175,7 @@
   <script src="{% static "assets/adminlte/dist/js/demo.js" %}"></script>
 
   <!-- custom -->
-  <script type="text/javascript" src="{% static "js/scripts.js" %}"></script>
+  {{additional_script | safe}}
+
 </body>
 </html>

@@ -14,7 +14,7 @@
           <h2 class="page-header">Applying Different Linear Models to GDP vs Life Satisfaction</h2>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-lg-6">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li><a href="#tab_1" data-toggle="tab"><i class="fa fa-file-excel-o" aria-hidden="true"></i> GDP Per Capta</a></li>
@@ -45,10 +45,10 @@
 
           </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Plotted using Matplotlib Python</h3>
+              <h3 class="box-title">Plotted using Chart.js Lib</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -57,48 +57,28 @@
               </div>
             </div>
             <div class="box-body">
-              <img style="height: 310px;text-align: center;" class="img-responsive" src="{% static file1.path %}" />
+              <p class="text-info"><i class="fa fa-info-circle"></i>&nbsp Point the mouse over the points to see the name of the country in the graph.</p>
+              <br>
+              <div class="chart" >
+
+                <canvas style="width:100%;" id="areaChart"></canvas>
+
+              </div>
             </div>
+            <!-- /.box-body -->
           </div>
         </div>
+
       </div>
     </section>
 
     <section class="col-lg-12 connectedSortable">
      <div class="row">
-      <div class="col-lg-12">
+
+      <div class="col-lg-5">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Plotted using Chart.js Lib</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-          </div>
-          <div class="box-body">
-            <p class="text-info"><i class="fa fa-info-circle"></i>&nbsp Point the mouse over the points to see the name of the country in the graph.</p>
-            <br>
-            <div class="chart" >
-
-              <canvas style="width:100%;" id="areaChart"></canvas>
-
-            </div>
-          </div>
-          <!-- /.box-body -->
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="col-lg-6 connectedSortable">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title"></h3>
+            <h3 class="box-title">Graphs</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -109,24 +89,34 @@
           <div class="box-body">
 
             <div class="row">
-              <div class="col-lg-3">
-                <table class="table table-striped">
-                  <tr>
-                    <th>MSE</th>
-                    <td class="text-primary">{{mse_train}}</td>
-                  </tr>
-                  <tr>
-                    <th>R2</th>
-                    <td class="text-warning">{{r2_train}}</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-lg-9">
-                <img class="img-responsive" src="{% static file2.path %}" />
-              </div>
 
               <div class="col-lg-12">
-                <h4>Predict Life Satisfaction </h4>
+                <img class="img-responsive" src="{% static file2.path %}" />
+                <img class="img-responsive" src="{% static file3.path %}" />
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Predict Life Satisfaction</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+
+            <div class="row">
+
+              <div class="col-lg-12">
 
                 <div class="form-group">
                   <input id="gdp_slider" type="text" value="20000" class="slider form-control" data-slider-min="0" data-slider-max="99999"
@@ -146,7 +136,7 @@
 
               <div class="col-lg-6">
                 <div class="info-box">
-                  <span class="info-box-icon bg-red"><i class="fa fa-heart"></i></span>
+                  <span class="info-box-icon bg-red"><i class="fa fa-smile-o"></i></span>
 
                   <div class="info-box-content">
                     <span class="info-box-text">Life Satisfaction</span>
@@ -154,20 +144,20 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
           </div>
+
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="col-lg-6 connectedSortable">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="box box-primary">
+      <div class="col-lg-7">
+
+        <!-- BAR CHART -->
+        <div class="box box-success">
           <div class="box-header with-border">
-            <h3 class="box-title"></h3>
+            <h3 class="box-title">Comparing Metrics</h3>
 
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -177,32 +167,55 @@
           </div>
           <div class="box-body">
 
-            <div class="row">
-              <div class="col-lg-3">
-                <table class="table table-striped">
-                  <tr>
-                    <th>MSE</th>
-                    <td class="text-primary">{{mse2}}</td>
-                  </tr>
-                  <tr>
-                    <th>R2</th>
-                    <td class="text-warning">{{r22}}</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-lg-9">
-                <img class="img-responsive" src="{% static file3.path %}" />
-              </div>
+            <table class="table table-striped">
+              <tr>
+                <th></th>
+                <th>Linear Modelling</th>
+                <th>Polynomial Modelling</th>
+              </tr>
+              <tr>
+                <th style="color:#00c468;">MSE</th>
+                <td>{{mse2}}</td>
+                <td>{{mse_train}}</td>
+              </tr>
+              <tr>
+                <th style="color:#00d2f7;">R2</th>
+                <td>{{r22}}</td>
+                <td>{{r2_train}}</td>
+              </tr>
+            </table>
+            <input type="hidden" id="mse2" value="{{mse2}}" />
+            <input type="hidden" id="r22" value="{{r22}}" />
+            <input type="hidden" id="mse1" value="{{mse_train}}" />
+            <input type="hidden" id="r21" value="{{r2_train}}" />
 
+            <div class="chart">
+              <canvas id="barChart" style="height:230px"></canvas>
             </div>
-
           </div>
-
+          <!-- /.box-body -->
         </div>
       </div>
+    <!--
+        <div class="col-lg-6">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Plotted using Matplotlib Python</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <img style="height: 310px;text-align: center;" class="img-responsive" src="{% static file1.path %}" />
+            </div>
+          </div>
+        </div>
+      -->
     </div>
   </section>
-
 
 </div>
 

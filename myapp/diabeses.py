@@ -33,7 +33,7 @@ def index(request):
 	# transform to Dataframe
 	diabetes_X_df = pd.DataFrame(diabetes.data)
 	diabetes_X_df.columns = list(diabetes.feature_names)
-	html_diabeses = create_HTML_table(diabetes_X_df)
+	html_diabeses = create_HTML_table(diabetes_X_df.head(50))
 
 	# X,Y
 	diabetes_X = diabetes.data
@@ -57,14 +57,16 @@ def index(request):
 	# make predictions using the testing set
 	y_test_pred = lm.predict(X_test)
 
-
+	# JS script for this page
+	additional_script = '<script type="text/javascript" src="' + settings.STATIC_URL + 'js/scripts_diabeses.js"></script>'
 	# Render View
 	base_url = request.get_host()
 	if(base_url == "127.0.0.1:8000"):
 		base_url = "http://127.0.0.1:8000"
 		return render_to_response('templates/myapp/diabeses.html', {
 			'html_diabeses': html_diabeses,
-			'base_url': base_url
+			'base_url': base_url,
+			'additional_script': additional_script
 			})
 
 

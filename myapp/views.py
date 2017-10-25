@@ -33,9 +33,9 @@ def gdp(request):
 	life_sat = read_csv_life_sat("/myapp/data/oecd_bli_2015.csv")
 
 	# Creating a Styler object from a Dataframe
-	html_table_gdp = create_HTML_table(gdp_pc, '2015')
+	html_table_gdp = create_HTML_table(gdp_pc.head(20), '2015')
 	# Creating a Styler object from a Dataframe
-	html_table_life_sat = create_HTML_table(life_sat, 'Value')
+	html_table_life_sat = create_HTML_table(life_sat.head(20), 'Value')
 
 
 	# Pre - Processing DATA
@@ -109,6 +109,10 @@ def gdp(request):
 	base_url = request.get_host()
 	if(base_url == "127.0.0.1:8000"):
 		base_url = "http://127.0.0.1:8000"
+
+	# JS script for this page
+	additional_script = '<script type="text/javascript" src="' + settings.STATIC_URL + 'js/scripts.js"></script>'
+
 	return render_to_response('templates/myapp/gdp.html', {
 		'html_table_gdp': html_table_gdp,
 		'html_table_life_sat': html_table_life_sat,
@@ -120,7 +124,8 @@ def gdp(request):
 		'file3' : polynomial['fig'],
 		'mse2' : polynomial['mse'],
 		'r22' : polynomial['r2'],
-		'base_url': base_url
+		'base_url': base_url,
+		'additional_script': additional_script
 	})
 
 
