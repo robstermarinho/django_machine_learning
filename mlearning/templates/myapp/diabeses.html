@@ -1,0 +1,41 @@
+{% extends 'templates/myapp/adminlte.html' %}
+{% block content %}
+{% load static %}
+
+<section class="content">
+
+  <div class="row">
+    <section class="col-lg-12">
+
+      <div class="row">
+
+
+        <div class="col-lg-12">
+          <h2 class="page-header">Diabetes dataset</h2>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#diabese_tab_1" data-toggle="tab"><i class="fa fa-table" aria-hidden="true"></i> Diabeses</a></li>
+
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="diabese_tab_1">
+                <div class="table-responsive">
+                  {{html_diabeses | safe}}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+</div>
+
+</section>
+{% endblock %}

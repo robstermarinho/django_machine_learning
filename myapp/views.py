@@ -21,25 +21,24 @@ from django.conf import settings
 
 # Global Variables
 lr_model = []
+lrf_model = []
 life_sat_gdp = []
 
 def gdp(request):
 
-	global lr_model, life_sat_gdp
+	global lr_model, lrf_model, life_sat_gdp
 
 	# Reading CSV files
 	gdp_pc = read_csv_gdp("/myapp/data/gdp_per_capita.csv")
 	life_sat = read_csv_life_sat("/myapp/data/oecd_bli_2015.csv")
 
 	# Creating a Styler object from a Dataframe
-	html_table_gdp = (
-    	gdp_pc.style
-	    .set_properties(**{'font-size': '8pt', 'font-family': 'Calibri'})
-	    .bar(subset=['2015'], color='lightblue')
-	    .render()
-	)
+	html_table_gdp = create_HTML_table(gdp_pc, '2015')
+	# Creating a Styler object from a Dataframe
+	html_table_life_sat = create_HTML_table(life_sat, 'Value')
 
-	#Pre - Process DATA
+
+	# Pre - Processing DATA
 	life_sat_condition = (life_sat["INDICATOR"] == "SW_LIFS") & (life_sat["INEQUALITY"] == "TOT")
 	columns_of_interest = ["Country", "INDICATOR", "Value"]
 	life_sat_by_country = life_sat[life_sat_condition][columns_of_interest]
@@ -53,6 +52,10 @@ def gdp(request):
 
 	# Sorting by Country
 	life_sat_gdp = life_sat_gdp.sort_values(by=('Country'), ascending=True)
+
+	# Creating a Styler object from life_sat_gdp Dataframe
+	html_life_sat_gdp = create_HTML_table(life_sat_gdp, 'Life_Satisfaction')
+
 
 	# Plotting the dataset using Matplotlib
 	ploted = life_sat_gdp.plot(kind = "scatter",
@@ -86,9 +89,8 @@ def gdp(request):
 	r2_train = r2_score(y_train, y_train_pred)
 
 	# Plotting the result of the modeling
-
-	plt.scatter(X_train, y_train, color = "orange", alpha = 0.5, edgecolors = 'red')
-	ploted2 = plt.plot(X_train, y_train_pred, color = "#8e350b", linewidth = 3, alpha = 0.7)
+	plt.scatter(X_train, y_train, color = "#00C0EF", alpha = 1, edgecolors = '#00C0EF')
+	plt.plot(X_train, y_train_pred, color = "#DD4B39", linewidth = 3, alpha = 1)
 	plt.title("Fitting a linear model to the training set")
 	plt.xlabel("GDP 2015")
 	plt.ylabel("Life Satisfaction Index")
@@ -102,14 +104,15 @@ def gdp(request):
 	fig2.savefig(path)
 
 	polynomial = reshape_and_split(ploted, life_sat_gdp, X_train, X_test, y_train, y_test)
+	lrf_model = polynomial['lrf_model']
 
 	base_url = request.get_host()
 	if(base_url == "127.0.0.1:8000"):
 		base_url = "http://127.0.0.1:8000"
 	return render_to_response('templates/myapp/gdp.html', {
-		'data': life_sat_gdp.to_html(),
-		'gdp_pc': html_table_gdp,
-		'life_sat': life_sat.to_html(),
+		'html_table_gdp': html_table_gdp,
+		'html_table_life_sat': html_table_life_sat,
+		'html_life_sat_gdp': html_life_sat_gdp,
 		'file1' : file1,
 		'file2' : file2,
 		'mse_train': mse_train,
@@ -146,8 +149,8 @@ def reshape_and_split(ploted, life_sat_gdp, X_train, X_test, y_train, y_test):
 	r2_f_train = r2_score(y_train, y_train_f_pred)
 	res['r2'] = r2_f_train
 
-	plt.scatter(X_train, y_train, color = "green")
-	plt.scatter(X_train_f[:,1], y_train_f_pred, color = "blue")
+	plt.scatter(X_train, y_train, color = "#00C0EF", alpha = 1, edgecolors = '#00C0EF')
+	plt.scatter(X_train_f[:,1], y_train_f_pred, color = "#1ee800", linewidth = 3, alpha = 0.7)
 	plt.title("Fitting a Linear Model with Polynomial Features to the Training Set")
 	plt.xlabel("GDP 2015")
 	plt.ylabel("Life Satisfaction Index")
@@ -210,3 +213,14 @@ def read_csv_life_sat(path):
 	life_sat = pd.read_csv(os.path.realpath('.') + path,
 		thousands = ",")
 	return life_sat
+
+
+# Creating a Styler object HTML table from a Dataframe
+def create_HTML_table(dataframe, colum_bar_count):
+	html_table_dataframe = (
+    	dataframe.style
+	    .set_properties(**{'font-size': '12pt', 'width' : '100%','font-family': 'Calibri'})
+	    .bar(subset=[colum_bar_count], color='lightblue')
+	    .render()
+	)
+	return html_table_dataframe

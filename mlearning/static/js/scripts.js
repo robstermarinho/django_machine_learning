@@ -1,8 +1,19 @@
 $(document).ready(function() {
 
 	/* DATATABLES */
-	$(".dataframe").addClass("table table-hover table-striped");
-	$(".dataframe").prop("border", 0);
+
+	$("#tab_1 table").addClass("table table-hover table-striped");
+	$("#tab_1 table").css("width", "100%");
+	$("#tab_2 table").addClass("table table-hover table-striped");
+	$("#tab_2 table").css("width", "100%");
+	$("#tab_3 table").addClass("table table-hover table-striped");
+	$("#tab_3 table").css("width", "100%");
+
+	$("#diabese_tab_1 table").addClass("table table-hover table-striped");
+	$("#diabese_tab_1 table").css("width", "100%");
+	$("#diabese_tab_1 table").DataTable({});
+
+
 	$("#tab_1 table").DataTable({
 		"pageLength": 5,
 		"columnDefs": [
@@ -10,7 +21,16 @@ $(document).ready(function() {
 			"targets": [ 5 ],
 			"visible": false,
 			"searchable": true
-		}]
+		},
+		{
+			"targets": [ 1 ],
+			"width": "10%"
+		},
+		{
+			"targets": [ 2 ],
+			"width": "40%"
+		}
+		]
 	});
 	$("#tab_2 table").DataTable({
 		"pageLength": 5,
@@ -21,10 +41,11 @@ $(document).ready(function() {
 			"searchable": true
 		}]
 	});
+
 	$("#tab_3 table").DataTable({
 		"pageLength": 5
 	});
-
+	$(".dataframe").show();
 
 
 	/* BOOTSTRAP SLIDER */
@@ -37,8 +58,8 @@ $(document).ready(function() {
 	function predict_gdp_value(e){
 		$("#gdp_value").html($(this).val());
 		getPredictedY($(this).val());
-
 	}
+
 	function getPredictedY(valuex){
 
 		$.ajax({
