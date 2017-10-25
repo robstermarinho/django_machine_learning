@@ -44,7 +44,7 @@ def index(request):
 	X_train, X_test, y_train, y_test = train_test_split(
 		diabetes_X,
 		diabetes_y,
-		test_size=0.4,
+		test_size=0.2,
 		random_state=1)
 
 	random_forest = apply_randomForest(X_train, X_test, y_train, y_test)
