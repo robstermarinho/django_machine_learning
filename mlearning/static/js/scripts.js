@@ -59,7 +59,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: base_URL_ + "/myapp/getPredictedY/",
 			method: "GET",
-			async: true,
+			async: false,
 			data: { new_x : parseFloat(valuex)},
 			dataType: "json",
 			beforeSend: function() {
@@ -67,14 +67,13 @@ $(document).ready(function() {
 			complete: function(){
 			},
 			success: function(data){
-				if(data == 0){
+				if(data === 0){
 					getPredictedY(valuex);
 				}else{
 					$("#ls_result").html(data);
 				}
 			},
 			error: function(xhr, status, error) {
-				alert("Internal Error");
 				console.log(xhr);
 				console.log(status);
 				console.log(error);

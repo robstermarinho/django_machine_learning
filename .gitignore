@@ -1,4 +1,8 @@
-venv
-*.pyc
 staticfiles
+*.idea
+*.sqlite3
+*pyc
+.DS_Store
+media
 .env
+venv
